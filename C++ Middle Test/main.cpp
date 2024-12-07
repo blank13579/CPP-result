@@ -2,7 +2,7 @@
 #include <Windows.h> //sleep
 #define Exit 6
 
-std::string getPasswordInput(const std::string&); //ºñ¹Ğ¹øÈ£ ÀÔ·Â ½Ã *·Î Ä¡È¯
+std::string getPasswordInput(const std::string&); //ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ ì‹œ *ë¡œ ì¹˜í™˜
 
 int main() {
     Bank bank;
@@ -11,90 +11,90 @@ int main() {
     char temp;
 
     do {
-        std::cout << "1. °èÁÂ »ı¼º\n2. ÀÔ±İ\n3. Ãâ±İ\n4. ÀÜ¾× Á¶È¸\n5. °èÁÂ Ã£±â\n6. Á¾·á\n¼±ÅÃ : ";
+        std::cout << "1. ê³„ì¢Œ ìƒì„±\n2. ì…ê¸ˆ\n3. ì¶œê¸ˆ\n4. ì”ì•¡ ì¡°íšŒ\n5. ê³„ì¢Œ ì°¾ê¸°\n6. ì¢…ë£Œ\nì„ íƒ : ";
         std::cin >> choice;
 
-        //¼±ÅÃÁö ¹®ÀÚ ¿¹¿Ü Ã³¸®
+        //ì„ íƒì§€ ë¬¸ì ì˜ˆì™¸ ì²˜ë¦¬
         if (std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(INT_MAX, '\n');
             choice = Exit + 1;
         }
 
-        //¼±ÅÃÁö
+        //ì„ íƒì§€
         switch (choice) {
         case 1:
-            //°èÁÂ »ı¼º
+            //ê³„ì¢Œ ìƒì„±
             system("cls");
             bank.createAccount();
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
             break;
         case 2:
-            //ÀÔ±İ
+            //ì…ê¸ˆ
             system("cls");
-            std::cout << "°èÁÂ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+            std::cout << "ê³„ì¢Œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
             std::cin >> accountnumber;
             
-            //°èÁÂ ¹øÈ£ È®ÀÎ -> ºñ¹Ğ¹øÈ£ È®ÀÎ ¹× ¿¹¿Ü Ã³¸®
+            //ê³„ì¢Œ ë²ˆí˜¸ í™•ì¸ -> ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë° ì˜ˆì™¸ ì²˜ë¦¬
             {
                 Account* account = bank.manageAccount(accountnumber);
                 if (account) {
-                    std::cout << "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                    std::cout << "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
                     std::string accountpw = getPasswordInput("");
                     if (accountpw == account->getAccountPW()) {
                         while(1){
-                            std::cout << "ÀÔ±İÇÒ ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                            std::cout << "ì…ê¸ˆí•  ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”. : ";
                             std::cin >> amount;
-                            if (std::cin.fail()) { // ±İ¾× ¹®ÀÚ ¿¹¿Ü Ã³¸®
+                            if (std::cin.fail()) { // ê¸ˆì•¡ ë¬¸ì ì˜ˆì™¸ ì²˜ë¦¬
                                 std::cin.clear();
                                 std::cin.ignore(INT_MAX, '\n');
-                                std::cout << "¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä." << std::endl;
+                                std::cout << "ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”." << std::endl;
                                 continue;
                             }
-                            else if (amount < 0) { // ±İ¾× À½¼ö ¿¹¿Ü Ã³¸® (À½¼öÀÇ °æ¿ì 0¿øÀ¸·Î Ã³¸®)
+                            else if (amount < 0) { // ê¸ˆì•¡ ìŒìˆ˜ ì˜ˆì™¸ ì²˜ë¦¬ (ìŒìˆ˜ì˜ ê²½ìš° 0ì›ìœ¼ë¡œ ì²˜ë¦¬)
                                 amount = 0;
                             }
-                            account->deposit(amount); // ÀÔ±İ
+                            account->deposit(amount); // ì…ê¸ˆ
                             account->checkBalance();
                             break;
                         }
 
                     }
                     else {
-                        std::cout << "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù." << std::endl;
+                        std::cout << "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤." << std::endl;
                     }
                 }
             }
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
             break;
         case 3:
-            //Ãâ±İ
+            //ì¶œê¸ˆ
             system("cls");
-            std::cout << "°èÁÂ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+            std::cout << "ê³„ì¢Œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
             std::cin >> accountnumber;
 
-            //°èÁÂ ¹øÈ£ È®ÀÎ -> ºñ¹Ğ¹øÈ£ È®ÀÎ ¹× ¿¹¿Ü Ã³¸®
+            //ê³„ì¢Œ ë²ˆí˜¸ í™•ì¸ -> ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë° ì˜ˆì™¸ ì²˜ë¦¬
             {
                 Account* account = bank.manageAccount(accountnumber);
                 if (account) {
-                    std::cout << "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                    std::cout << "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
                     std::string accountpw = getPasswordInput("");
                     if (accountpw == account->getAccountPW()) {
                         while (1) {
-                            std::cout << "Ãâ±İÇÒ ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                            std::cout << "ì¶œê¸ˆí•  ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”. : ";
                             std::cin >> amount;
-                            if (std::cin.fail()) { // ±İ¾× ¹®ÀÚ ¿¹¿Ü Ã³¸®
+                            if (std::cin.fail()) { // ê¸ˆì•¡ ë¬¸ì ì˜ˆì™¸ ì²˜ë¦¬
                                 std::cin.clear();
                                 std::cin.ignore(INT_MAX, '\n');
-                                std::cout << "¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä" << std::endl;
+                                std::cout << "ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”" << std::endl;
                                 continue;  
                             }
-                            else if (amount < 0) { // ±İ¾× À½¼ö ¿¹¿Ü Ã³¸® (À½¼öÀÇ °æ¿ì 0¿øÀ¸·Î Ã³¸®)
+                            else if (amount < 0) { // ê¸ˆì•¡ ìŒìˆ˜ ì˜ˆì™¸ ì²˜ë¦¬ (ìŒìˆ˜ì˜ ê²½ìš° 0ì›ìœ¼ë¡œ ì²˜ë¦¬)
                                 amount = 0;
                             }
-                            account->withdraw(amount); // Ãâ±İ
+                            account->withdraw(amount); // ì¶œê¸ˆ
                             account->checkBalance();
                             break;
                         }
@@ -102,65 +102,65 @@ int main() {
                     
                 }
             }
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
             break;
         case 4:
-            //ÀÜ¾× Á¶È¸
+            //ì”ì•¡ ì¡°íšŒ
             system("cls");
-            std::cout << "°èÁÂ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+            std::cout << "ê³„ì¢Œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
             std::cin >> accountnumber;
 
-            //°èÁÂ ¹øÈ£ È®ÀÎ -> ºñ¹Ğ¹øÈ£ È®ÀÎ ¹× ¿¹¿Ü Ã³¸®
+            //ê³„ì¢Œ ë²ˆí˜¸ í™•ì¸ -> ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë° ì˜ˆì™¸ ì²˜ë¦¬
             {
                 Account* account = bank.manageAccount(accountnumber);
                 if (account) {
-                    std::cout << "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                    std::cout << "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
                     std::string accountpw = getPasswordInput("");
                     if (accountpw == account->getAccountPW()) {
-                        account->checkBalance(); // ÀÜ¾× Á¶È¸
+                        account->checkBalance(); // ì”ì•¡ ì¡°íšŒ
                     }
                     else {
-                        std::cout << "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù." << std::endl;
+                        std::cout << "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤." << std::endl;
                     }
                 }
             }
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
             break;
         case 5:
-            //°èÁÂ Ã£±â
+            //ê³„ì¢Œ ì°¾ê¸°
             system("cls");
-            std::cout << "»ç¿ëÀÚ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä. : ";
+            std::cout << "ì‚¬ìš©ì ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”. : ";
             std::cin >> accountU_name;
 
-            //»ç¿ëÀÚ ÀÌ¸§ È®ÀÎ -> ºñ¹Ğ¹øÈ£ È®ÀÎ ¹× ¿¹¿Ü Ã³¸®
+            //ì‚¬ìš©ì ì´ë¦„ í™•ì¸ -> ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë° ì˜ˆì™¸ ì²˜ë¦¬
             {
                 Account* account = bank.manageAccountToName(accountU_name);
                 if (account) {
-                    std::cout << "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. : ";
+                    std::cout << "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. : ";
                     std::string accountpw = getPasswordInput("");
                     if (accountpw == account->getAccountPW()) {
-                        int num = account->getAccountNumber(); // °èÁÂ ¹øÈ£ ºÒ·¯¿À±â
-                        std::cout << "°èÁÂ ¹øÈ£´Â '" << num << "' ÀÔ´Ï´Ù.";
+                        int num = account->getAccountNumber(); // ê³„ì¢Œ ë²ˆí˜¸ ë¶ˆëŸ¬ì˜¤ê¸°
+                        std::cout << "ê³„ì¢Œ ë²ˆí˜¸ëŠ” '" << num << "' ì…ë‹ˆë‹¤."<<std::endl;
                     }
                     else {
-                        std::cout << "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù." << std::endl;
+                        std::cout << "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤." << std::endl;
                     }
                 }
             }
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
             break;
         case Exit:
             system("cls");
-            std::cout << "Á¾·áÁß..." << std::endl;
+            std::cout << "ì¢…ë£Œì¤‘..." << std::endl;
             Sleep(1000);
             break;
-        default: // ¹®ÀÚ³ª ¼±ÅÃÁö ¿Ü ¼ıÀÚ Ãâ·Â È®ÀÎ
+        default: // ë¬¸ìë‚˜ ì„ íƒì§€ ì™¸ ìˆ«ì ì¶œë ¥ í™•ì¸
             system("cls");
-            std::cout << "¾ø´Â ¼±ÅÃÁöÀÔ´Ï´Ù." << std::endl;
-            std::cout << "¾Æ¹« Å°¸¦ ´­·¯ ³Ñ¾î°©´Ï´Ù.";
+            std::cout << "ì—†ëŠ” ì„ íƒì§€ì…ë‹ˆë‹¤." << std::endl;
+            std::cout << "ì•„ë¬´ í‚¤ë¥¼ ëˆŒëŸ¬ ë„˜ì–´ê°‘ë‹ˆë‹¤.";
             temp = _getch();
         }
 
